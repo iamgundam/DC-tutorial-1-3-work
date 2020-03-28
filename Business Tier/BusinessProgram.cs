@@ -78,7 +78,7 @@ namespace Business_Tier
             int searchBalance;
 
             //Pre-assign default values if not found
-            fName = "Account not found!";
+            fName = "";
             acctNo = 0;
             pin = 0;
             balance = 0;

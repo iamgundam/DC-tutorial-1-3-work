@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,18 +54,65 @@ namespace Client_Service
             BalanceBox.Text = bal.ToString();
         }
 
+        //Delegate for async search
+        private delegate void SearchOperation(string lName, out string fName, out uint acctNo, out uint pin, out int balance);
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            string fName = "", lName = SearchBox.Text;
-            int bal = 0;
-            uint acctNo = 0, pin = 0;
+            string fName, lName = SearchBox.Text;
+            int bal;
+            uint acctNo, pin;
 
-            foob.SearchByLastName(lName, out fName, out acctNo, out pin, out bal);
-            FNameBox.Text = fName;
-            LNameBox.Text = lName;
-            AcctNoBox.Text = acctNo.ToString();
-            PinBox.Text = pin.ToString("D4");
-            BalanceBox.Text = bal.ToString();
+            //Sleep GUI to wait for results
+            SearchBox.IsReadOnly = true;
+            IndexBox.IsReadOnly = true;
+            GoButton.IsEnabled = false;
+            SearchButton.IsEnabled = false;
+
+            //Set delegate target function
+            SearchOperation sOp = foob.SearchByLastName;
+
+            //Set callback function to run when async task finishes running
+            AsyncCallback callback = this.OnSearchComplete;
+
+            //Begin async task, searching
+            sOp.BeginInvoke(lName, out fName, out acctNo, out pin, out bal, callback, null);
         }
-    }
-}
+        public void OnSearchComplete(IAsyncResult asyncResult)
+        {
+            SearchOperation sOp;
+            string fName, lName = SearchBox.Text;
+            int bal;
+            uint acctNo, pin;
+
+            //Retrieve async task from import
+            AsyncResult asyncObj = (AsyncResult)asyncResult;
+
+            //Check if the task has already been ended, before attempting to end
+            if(asyncObj.EndInvokeCalled == false)
+            {
+                //Retrieve delegate
+                sOp = (SearchOperation)asyncObj.AsyncDelegate;
+
+                //End task, retrieve out variables
+                sOp.EndInvoke(out fName, out acctNo, out pin, out bal, asyncObj);
+
+                //Display results.
+                FNameBox.Text = fName;
+                LNameBox.Text = lName;
+                AcctNoBox.Text = acctNo.ToString();
+                PinBox.Text = pin.ToString("D4");
+                BalanceBox.Text = bal.ToString();
+
+                //Wake up GUI
+                SearchBox.IsReadOnly = false;
+                IndexBox.IsReadOnly = false;
+                GoButton.IsEnabled = true;
+                SearchButton.IsEnabled = true;
+            }
+
+            //Clean up.
+            asyncObj.AsyncWaitHandle.Close();
+        }
+
+    }//end class
+}//end namespace
