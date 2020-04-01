@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Business_Tier;
+using RestSharp;
+using API_Classes;
+using Newtonsoft.Json;
 
 namespace Client_Service
 {
@@ -23,44 +26,68 @@ namespace Client_Service
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BusinessServerInterface foob;
+        private RestClient client;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //Open connection to Business tier
-            NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8101/BusinessService";
-
-            ChannelFactory<Business_Tier.BusinessServerInterface> businessFactory;
-            businessFactory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
-            foob = businessFactory.CreateChannel();
+            string URL = "https://localhost:44317/";
+            client = new RestClient(URL);
         }
 
         private void GoButton_Click(object sender, RoutedEventArgs e)
         {
             int index = 0;
-            string fName = "", lName = "";
-            int bal = 0;
-            uint acctNo = 0, pin = 0;
 
+            //Get index to search for
             index = Int32.Parse(IndexBox.Text);
-            foob.GetValuesForEntry(index, out acctNo, out pin, out fName, out lName, out bal);
-            FNameBox.Text = fName;
-            LNameBox.Text = lName;
-            AcctNoBox.Text = acctNo.ToString();
-            PinBox.Text = pin.ToString("D4");
-            BalanceBox.Text = bal.ToString();
+
+            //Fetch values at index
+            RestRequest req = new RestRequest(String.Concat("api/getvalues/", index.ToString()));
+            IRestResponse resp = client.Get(req);
+
+            //Deserialize JSON returned by the response to our request
+            DataIntermed result = JsonConvert.DeserializeObject<DataIntermed>(resp.Content);
+
+            //Set values using DataIntermed object.
+            FNameBox.Text = result.fname;
+            LNameBox.Text = result.lname;
+            AcctNoBox.Text = result.acct.ToString();
+            PinBox.Text = result.pin.ToString("D4");
+            BalanceBox.Text = result.bal.ToString();
         }
 
-        //Delegate for async search
-        private delegate void SearchOperation(string lName, out string fName, out uint acctNo, out uint pin, out int balance);
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            string fName, lName = SearchBox.Text;
-            int bal;
-            uint acctNo, pin;
+            //Use API class search template
+            SearchData search = new SearchData();
+            search.searchStr = SearchBox.Text;
+
+            //Set URL request for search POST function, and add SearchData
+            RestRequest req = new RestRequest(String.Concat("api/search/"));
+            req.AddJsonBody(search);
+
+            //Do the request
+            IRestResponse resp = client.Post(req);
+
+            //Deserialize and display.
+            DataIntermed result = JsonConvert.DeserializeObject<DataIntermed>(resp.Content);
+
+            FNameBox.Text = result.fname;
+            LNameBox.Text = result.lname;
+            AcctNoBox.Text = result.acct.ToString();
+            PinBox.Text = result.pin.ToString("D4");
+            BalanceBox.Text = result.bal.ToString();
+        }
+
+        /* Async search WIP
+
+        //Delegate for async search
+        private delegate IRestResponse SearchRequest(RestRequest request);
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string lName = SearchBox.Text;
 
             //Sleep GUI to wait for results
             SearchBox.IsReadOnly = true;
@@ -69,17 +96,18 @@ namespace Client_Service
             SearchButton.IsEnabled = false;
 
             //Set delegate target function
-            SearchOperation sOp = foob.SearchByLastName;
+            SearchRequest sOp = client.Post;
 
             //Set callback function to run when async task finishes running
             AsyncCallback callback = this.OnSearchComplete;
 
             //Begin async task, searching
-            sOp.BeginInvoke(lName, out fName, out acctNo, out pin, out bal, callback, null);
+            RestRequest req = new RestRequest(String.Concat("api/search/"));
+            sOp.BeginInvoke(req, callback, null);
         }
         public void OnSearchComplete(IAsyncResult asyncResult)
         {
-            SearchOperation sOp;
+            SearchRequest sOp;
             string fName, lName = SearchBox.Text;
             int bal;
             uint acctNo, pin;
@@ -91,17 +119,19 @@ namespace Client_Service
             if(asyncObj.EndInvokeCalled == false)
             {
                 //Retrieve delegate
-                sOp = (SearchOperation)asyncObj.AsyncDelegate;
+                sOp = (SearchRequest)asyncObj.AsyncDelegate;
 
                 //End task, retrieve out variables
-                sOp.EndInvoke(out fName, out acctNo, out pin, out bal, asyncObj);
+                IRestResponse resp = sOp.EndInvoke(asyncObj);
 
                 //Display results.
+                
                 FNameBox.Text = fName;
                 LNameBox.Text = lName;
                 AcctNoBox.Text = acctNo.ToString();
                 PinBox.Text = pin.ToString("D4");
                 BalanceBox.Text = bal.ToString();
+                
 
                 //Wake up GUI
                 SearchBox.IsReadOnly = false;
@@ -113,6 +143,7 @@ namespace Client_Service
             //Clean up.
             asyncObj.AsyncWaitHandle.Close();
         }
+        */
 
     }//end class
 }//end namespace

@@ -69,5 +69,6 @@ namespace Business_Tier_Web_Service.Models
             }
 
         }//end SearchByLastName
+
     }//end class
 }//end namespace

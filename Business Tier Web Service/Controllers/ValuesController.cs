@@ -10,17 +10,11 @@ namespace Business_Tier_Web_Service.Controllers
 {
     public class ValuesController : ApiController
     {
-        private DataModel data;
-
-        public ValuesController()
-        {
-            data = new DataModel();
-        }
-
         // GET api/<controller>
         // Default get request, returns number of entries in database.
         public string Get()
         {
+            DataModel data = new DataModel();
             return data.GetNumEntries().ToString();
         }
 

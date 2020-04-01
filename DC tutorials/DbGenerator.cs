@@ -8,12 +8,6 @@ namespace Data_Classes
 {
     internal class DbGenerator
     {
-        //Class fields
-        private uint acctNo;
-        private uint pin;
-        private string fName;
-        private string lName;
-        private int balance;
 
         //Random generator fields
         private Random r = new Random();

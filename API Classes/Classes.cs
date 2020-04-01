@@ -13,24 +13,10 @@ namespace API_Classes
         public string fname;
         public string lname;
         public int bal;
-
-        public DataIntermed(uint inAcct, uint inPin, string inFName, string inLName, int inBal)
-        {
-            acct = inAcct;
-            pin = inPin;
-            fname = inFName;
-            lname = inLName;
-            bal = inBal;
-        }
     }
 
     public class SearchData
     {
         public string searchStr;
-
-        public SearchData(string inSearchStr)
-        {
-            searchStr = inSearchStr;
-        }
     }
 }
