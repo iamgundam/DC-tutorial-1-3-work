@@ -4,9 +4,9 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using Data_Tier;
+using Data_Classes;
 
-namespace Remoting_Server
+namespace Data_Tier
 {
     class ServerRun
     {

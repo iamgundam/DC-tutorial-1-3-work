@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data_Tier
+namespace Data_Classes
 {
     internal class DbGenerator
     {
@@ -88,7 +88,7 @@ namespace Data_Tier
             string fName, lName;
             int balance;
 
-            dbList = new List<Data_Tier.DataStruct>();
+            dbList = new List<Data_Classes.DataStruct>();
 
             //Fills the database with randomly generated entries.
             for(int ii = 0; ii < INITIAL_ELEMENTS; ii++)

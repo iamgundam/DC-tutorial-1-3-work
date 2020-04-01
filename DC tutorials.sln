@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Tier", "DC tutorials\Data Tier.csproj", "{E5CC462D-223A-4375-ADA9-EF830B48818D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Classes", "DC tutorials\Data Classes.csproj", "{E5CC462D-223A-4375-ADA9-EF830B48818D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remoting Server", "Remoting Server\Remoting Server.csproj", "{26791860-A7B3-4F20-8F02-E92EB9657FAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Tier", "Remoting Server\Data Tier.csproj", "{26791860-A7B3-4F20-8F02-E92EB9657FAD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client Service", "Client Service\Client Service.csproj", "{0BFBC27E-BB89-4740-8D8D-22BBF60B7902}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business Tier", "Business Tier\Business Tier.csproj", "{62CAFE33-54E9-4F7E-9082-C666A9534873}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business Tier Web Service", "Business Tier Web Service\Business Tier Web Service.csproj", "{B429E17F-51AE-4560-A8D4-75651C4A2FA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API Classes", "API Classes\API Classes.csproj", "{688BFD99-3945-4BC6-BF34-1340DF65155E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{62CAFE33-54E9-4F7E-9082-C666A9534873}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62CAFE33-54E9-4F7E-9082-C666A9534873}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62CAFE33-54E9-4F7E-9082-C666A9534873}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B429E17F-51AE-4560-A8D4-75651C4A2FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B429E17F-51AE-4560-A8D4-75651C4A2FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B429E17F-51AE-4560-A8D4-75651C4A2FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B429E17F-51AE-4560-A8D4-75651C4A2FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{688BFD99-3945-4BC6-BF34-1340DF65155E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{688BFD99-3945-4BC6-BF34-1340DF65155E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{688BFD99-3945-4BC6-BF34-1340DF65155E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{688BFD99-3945-4BC6-BF34-1340DF65155E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

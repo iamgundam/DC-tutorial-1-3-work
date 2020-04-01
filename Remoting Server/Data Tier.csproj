@@ -51,9 +51,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DC tutorials\Data Tier.csproj">
+    <ProjectReference Include="..\DC tutorials\Data Classes.csproj">
       <Project>{e5cc462d-223a-4375-ada9-ef830b48818d}</Project>
-      <Name>Data Tier</Name>
+      <Name>Data Classes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,7 +1,8 @@
-﻿using Remoting_Server;
+﻿using Data_Tier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace Business_Tier
     public class BusinessServer : BusinessServerInterface
     {
         private DataServerInterface data;
+        private uint logCount;
 
         public BusinessServer()
         {
@@ -53,18 +55,22 @@ namespace Business_Tier
             NetTcpBinding tcp = new NetTcpBinding();
             string URL = "net.tcp://localhost:8100/DataService";
 
-            ChannelFactory<Remoting_Server.DataServerInterface> dataFactory;
+            ChannelFactory<Data_Tier.DataServerInterface> dataFactory;
             dataFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             data = dataFactory.CreateChannel();
+
+            logCount = 0;
         }
 
         public int GetNumEntries()
         {
+            Log("Accessed total number of database entries.");
             return data.GetNumEntries();
         }
 
         public void GetValuesForEntry(int index, out uint acctNo, out uint pin, out string fName, out string lName, out int bal)
         {
+            Log(String.Concat("Retrieved values at index ", index.ToString()));
             data.GetValuesForEntry(index, out acctNo, out pin, out fName, out lName, out bal);
         }
 
@@ -83,7 +89,7 @@ namespace Business_Tier
             pin = 0;
             balance = 0;
 
-            while(!found && !(index == data.GetNumEntries())) //While not found OR index reaches end of array. +1 added to index in last iteration.
+            while(!found && !(index == data.GetNumEntries())) //While not found AND index not at end of array. +1 added to index in last iteration.
             {
                 //Retrieve values at index
                 data.GetValuesForEntry(index, out searchAcctNo, out searchPin, out searchFName, out searchLName, out searchBalance);
@@ -97,11 +103,22 @@ namespace Business_Tier
                     pin = searchPin;
                     balance = searchBalance;
 
+                    //Exit loop.
                     found = true;
                 }
 
                 index += 1;
             }
+
+            Log(String.Concat("Searched database for ", lName));
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private void Log(string logString)
+        {
+            logCount += 1;
+            Console.WriteLine(String.Concat(logCount.ToString(), ": ", logString));
+        }
+
     }//end class
 }//end namespace
