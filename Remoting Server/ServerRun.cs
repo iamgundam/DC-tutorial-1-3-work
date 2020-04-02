@@ -17,7 +17,7 @@ namespace Data_Tier
             ServiceHost host;
             NetTcpBinding tcp = new NetTcpBinding();
 
-            host = new ServiceHost(typeof(DataServer));
+            host = new ServiceHost(DataServer.get()) ;
             host.AddServiceEndpoint(typeof(DataServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");
             host.Open();
 
@@ -39,14 +39,25 @@ namespace Data_Tier
 
     }//end DataServerInterface
 
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext =false)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext =false, InstanceContextMode = InstanceContextMode.Single)]
     internal class DataServer : DataServerInterface
     {
+        private static DataServer instance;
         private DbClass db;
 
-        public DataServer()
+        private DataServer()
         {
             db = new DbClass();
+        }
+
+        public static DataServer get()
+        {
+            if(instance == null)
+            {
+                instance = new DataServer();
+            }
+
+            return instance;
         }
 
         public int GetNumEntries()
