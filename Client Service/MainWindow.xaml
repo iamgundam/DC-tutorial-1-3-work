@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client_Service"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="DC Practical 1-3" Height="450" Width="800">
     <Grid>
-        <TextBox Name="FNameBox" HorizontalAlignment="Left" Height="23" Margin="347,69,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="LNameBox" HorizontalAlignment="Left" Height="23" Margin="347,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="AcctNoBox" HorizontalAlignment="Left" Height="23" Margin="347,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="PinBox" HorizontalAlignment="Left" Height="23" Margin="347,153,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="BalanceBox" HorizontalAlignment="Left" Height="23" Margin="347,181,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="FNameBox" HorizontalAlignment="Left" Height="23" Margin="347,69,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox Name="LNameBox" HorizontalAlignment="Left" Height="23" Margin="347,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox Name="AcctNoBox" HorizontalAlignment="Left" Height="23" Margin="347,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox Name="PinBox" HorizontalAlignment="Left" Height="23" Margin="347,153,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox Name="BalanceBox" HorizontalAlignment="Left" Height="23" Margin="347,181,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <Label Content="First name" HorizontalAlignment="Left" Margin="277,69,0,0" VerticalAlignment="Top" Height="23"/>
         <Label Content="Last name" HorizontalAlignment="Left" Margin="277,97,0,0" VerticalAlignment="Top" Height="23"/>
         <Label Content="Account" HorizontalAlignment="Left" Margin="288,125,0,0" VerticalAlignment="Top" Height="23"/>
@@ -20,8 +20,14 @@
         <TextBox Name="IndexBox" HorizontalAlignment="Left" Height="23" Margin="347,241,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
         <Label Content="Index" HorizontalAlignment="Left" Margin="303,241,0,0" VerticalAlignment="Top" Height="23"/>
         <Button Name="GoButton" Content="Go!" HorizontalAlignment="Left" Margin="418,241,0,0" VerticalAlignment="Top" Width="49" Click="GoButton_Click"/>
-        <TextBox x:Name="SearchBox" HorizontalAlignment="Left" Height="23" Margin="347,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Name="SearchButton" Content="Search!" HorizontalAlignment="Left" Margin="369,318,0,0" VerticalAlignment="Top" Width="75" Click="SearchButton_Click"/>
+        <TextBox x:Name="SearchBox" HorizontalAlignment="Left" Height="23" Margin="346,315,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Name="SearchButton" Content="Search!" HorizontalAlignment="Left" Margin="368,343,0,0" VerticalAlignment="Top" Width="75" Click="SearchButton_Click"/>
+        <Label Content="Search by last name" HorizontalAlignment="Left" Margin="347,287,0,0" VerticalAlignment="Top" Height="28"/>
+        <Label Content="Very Good Bank App" HorizontalAlignment="Left" Margin="303,10,0,0" VerticalAlignment="Top" Height="41" FontSize="20" FontWeight="Bold" Opacity="0.99">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="2" Opacity="0.3"/>
+            </Label.Effect>
+        </Label>
 
 
 

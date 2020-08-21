@@ -42,7 +42,7 @@ namespace Business_Tier_Web_Service.Models
             int searchBalance;
 
             //Pre-assign default values if not found
-            fName = "";
+            fName = "Account Not found!";
             acctNo = 0;
             pin = 0;
             balance = 0;

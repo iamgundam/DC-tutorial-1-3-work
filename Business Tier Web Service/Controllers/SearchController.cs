@@ -12,6 +12,8 @@ namespace Business_Tier_Web_Service.Controllers
     public class SearchController : ApiController
     {
         // POST api/<controller>
+        [Route("api/search")]
+        [HttpPost]
         public DataIntermed Post(SearchData value)
         {
             DataModel data = new DataModel();
